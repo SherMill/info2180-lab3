@@ -4,23 +4,47 @@
 /*Ex 1: event handler used for page loading so that DOM is fully loaded before the scipt runs*/
 
 document.addEventListener('DOMContentLoaded', function(){
+    initializeGame();
+});
 
-    document.getElementById('content').innerHTML = 'Updated Content';
-    const squares = document.querySelectorAll('.square');
+function initializeGame(){
+    const squares = document.querySelectorAll('#board div');
     squares.forEach(square => {
         square.classList.add('square');
     });
+    addClickHandlers();
+}
+
+function addClickHandlers(){
+    const squares = document.querySelectorAll('.square');
+    let curPlayer = 'X';
+    squares.forEach(square => {
+        square.addEventListener('click', function(){ 
+
+            if (!square.textContent){ //Check if the square is empty
+                square.textContent = curPlayer;
+                square.classList.add(curPlayer);
+                curPlayer = curPlayer === 'X' ? 'O' : 'X'; //player switching here
+                checkWinner();
+            }
+        });    
+    });
+}
+
+const square = socument.querySelectorAll('#board > div');
+
+
 
     /*Ex 2: X/O for clicked squares */
 
     //tracks square states and starts with player X
-    let gState = ['', '', '', '', '', '', '', '', ''];
+    /*let gState = ['', '', '', '', '', '', '', '', ''];
     let curPlayer = 'X'; 
-    let gActive = true;
+    let gActive = true;*/
 
     //square clicking being handled here
     
-    squares.forEach((square, ind)=> {
+ /*   squares.forEach((square, ind)=> {
         square.addEventListener('click', function(){
             if(gState[ind] === '' && gActive){ //part 6: the error check as it checks if the square is empty before doing any changes
                 gState[ind] === curPlayer; //check square emptiness
@@ -31,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         });
 
-    });
+    });*/
 
     squares.forEach(square => {
         square.addEventListener('mouseover', function(){
@@ -43,18 +67,6 @@ document.addEventListener('DOMContentLoaded', function(){
     });
 
     /*Ex 4: Checks for Winners and Does a Status Update*/
-
-    document.getElementById('New Game').addEventListener('click', function(){
-        gState.fill('');
-        curPlayer = 'X'; //to keep consistent
-        gActive = true;
-        squares.forEach(square => {
-            square.textContent = '';
-            square.classList.remove('X', 'O');
-    });
-        document.getElementById('status').textContent = '';
-        document.getElementById('status').classList.remove('you-won');
-    });
 
     function checkWinner(){
         const winCombinations = [
@@ -70,6 +82,33 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         });
     }
-    
-});
+
+    document.querySelector('.btn').addEventListener('click', () => {
+        squares.forEach(square => {
+            square.textContent = '';
+            square.classList.remove('X', 'O');
+        });
+        const status = document.getElementById('status');
+        status.textContent = 'Move your mouse over a square and click to play an O or X';
+        status.classList.remove('you-won');
+    });
+
+   function newGame(){
+        const squares = document.querySelectorAll('#board div');
+        squares.forEach(square => square.textContent = '');
+        const status = document.getElementById('status');
+        status.textContent = 'Move your mouse over a square and click to play an O or X';
+        status.classList.remove('you-won');
+   } 
+
+   document.querySelector('.btn').addEventListener('click', newGame);
+
+   document.querySelectorAll('#board div').forEach(square =>{ 
+        square.addEventListener('click', function(){
+            if (this.textContent === ''){
+                this.textContent = curPlayer;
+                checkWinner();
+            }
+        });
+   });
 
