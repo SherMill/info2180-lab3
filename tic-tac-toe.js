@@ -19,7 +19,7 @@ let curPlayer = 'X';
 //square clicking being handled here
 document.querySelectorAll('.square').forEach((square, ind) => {
     square.addEventListener('click', function(){
-        if(gState[ind] === ''){
+        if(gState[ind] === ''){ //part 6: the error check as it checks if the square is empty before doing any changes
             gState[ind] === curPlayer; //check square emptiness
             square.textContent = curPlayer; //For X or O
             square.classList.add(curPlayer); //Add class for styling
@@ -56,4 +56,13 @@ function checkWinner(){
     });
 }
 
-
+document.getElementById('newGame').addEventListener('click', function(){
+    gState.fill('');
+    curPlayer = 'X'; //to keep consistent
+    squares.forEach(square => {
+        square.textContent = '';
+        square.classList.remove('X', 'O');
+    });
+    document.getElementById('status').textContent = '';
+    document.getElementById('status').classList.remove('you-won');
+});
