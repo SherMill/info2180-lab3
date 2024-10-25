@@ -25,7 +25,6 @@ function addClickHandlers(){
                 square.textContent = curPlayer;
                 square.classList.add(curPlayer);
                 curPlayer = curPlayer === 'X' ? 'O' : 'X'; //player switching here
-                checkWinner();
             }
         });    
     });
