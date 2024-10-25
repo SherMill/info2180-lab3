@@ -15,46 +15,35 @@ function initializeGame(){
     addClickHandlers();
 }
 
+ /*Ex 2: X/O for clicked squares */
+
+//tracks square states and starts with player X
+let gState = Array(9), fill(null);
+let gActive = true;
+
+
 function addClickHandlers(){
     const squares = document.querySelectorAll('.square');
     let curPlayer = 'X';
     squares.forEach(square => {
-        square.addEventListener('click', function(){ 
-
-            if (!square.textContent){ //Check if the square is empty
-                square.textContent = curPlayer;
+        square.addEventListener('click', function(){
+            if (!square.textContent && gActive){
+                square.textContent && curPlayer;
                 square.classList.add(curPlayer);
-                curPlayer = curPlayer === 'X' ? 'O' : 'X'; //player switching here
+                gState[index] = curPlayer;
+                checkWinner();
+                curPlayer = curPlayer === 'X' ? 'O' : 'X';
             }
-        });    
+
+
+        });
+
     });
 }
 
-const square = socument.querySelectorAll('#board > div');
+const square = document.querySelectorAll('#board > div');
 
 
-
-    /*Ex 2: X/O for clicked squares */
-
-    //tracks square states and starts with player X
-    /*let gState = ['', '', '', '', '', '', '', '', ''];
-    let curPlayer = 'X'; 
-    let gActive = true;*/
-
-    //square clicking being handled here
-    
- /*   squares.forEach((square, ind)=> {
-        square.addEventListener('click', function(){
-            if(gState[ind] === '' && gActive){ //part 6: the error check as it checks if the square is empty before doing any changes
-                gState[ind] === curPlayer; //check square emptiness
-                square.textContent = curPlayer; //For X or O
-                square.classList.add(curPlayer); //Add class for styling
-                curPlayer = curPlayer === 'X' ? 'O' : 'X'; //player switching to O / X vice versa
-                checkWinner(); //stops at winner
-            }
-        });
-
-    });*/
 
     squares.forEach(square => {
         square.addEventListener('mouseover', function(){
@@ -111,3 +100,12 @@ const square = socument.querySelectorAll('#board > div');
         });
    });
 
+document.getElementById(.btn:hover).addEventListener('click', function(){
+    initializeGame();
+    document.querySelectorAll('.square').forEach(square => {
+        square.textContent = '';
+        square.classList.remove('X', 'O');
+    });
+    document.getElementById('status').textContent = 'Move your mouse over a square and click to play an O or X.'
+    document.getElementById('status').classList.remove('you-won');
+});
