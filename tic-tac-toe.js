@@ -1,39 +1,38 @@
 //Written by: Sheri-lee Mills
 //Done for Lab 3 ofINFO2180
 
-/*Ex 1: event handler used for page loading so that DOM is fully loaded before the scipt runs*/
+/*Ex 1: Layout the Board*/
 
+//only runs after the entire page structure is ready
 document.addEventListener('DOMContentLoaded', function(){
     initializeGame();
 });
 
+
 function initializeGame(){
-    const squares = document.querySelectorAll('#board div');
+    const squares = document.querySelectorAll('#board div'); //selects all div elements
     squares.forEach(square => {
         square.classList.add('square');
     });
-    addClickHandlers();
+    addClickHandlers(); //allows the squares to be clickable
+    addHoverEffect(); //sets the hover effects when the mouse hovers over the square
 }
 
  /*Ex 2: X/O for clicked squares */
 
 
 function addClickHandlers(){
-    const squares = document.querySelectorAll('.square');
-    let curPlayer = 'X';
+    const squares = document.querySelectorAll('.square'); //square class
+    let curPlayer = 'X'; //starts with player X
     squares.forEach(square => {
         square.addEventListener('click', function(){
-            if (!square.textContent && gActive){
-                square.textContent && curPlayer;
+            if (!square.textContent){ //checks the emptiness of the square
+                square.textContent = curPlayer;
                 square.classList.add(curPlayer);
-                gState[index] = curPlayer;
                 checkWinner();
-                curPlayer = curPlayer === 'X' ? 'O' : 'X';
+                curPlayer = curPlayer == 'X' ? 'O' : 'X';
             }
-
-
         });
-
     });
 }
 
@@ -102,4 +101,4 @@ document.getElementById(.btn:hover).addEventListener('click', function(){
     });
     document.getElementById('status').textContent = 'Move your mouse over a square and click to play an O or X.'
     document.getElementById('status').classList.remove('you-won');
-});*/
+});
