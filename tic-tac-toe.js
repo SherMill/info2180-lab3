@@ -84,4 +84,4 @@ function newGame(){
     initializeGame(); //Initialise again
 }
 
-document.querySelector('.btn').addEventListener('click', newGame);
+document.querySelector(btn).addEventListener('click', newGame);
