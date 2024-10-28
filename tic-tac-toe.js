@@ -18,8 +18,7 @@ function initializeGame(){
     addHoverEffect(); //sets the hover effects when the mouse hovers over the square
 }
 
- /*Ex 2: X/O for clicked squares */
-
+ /*Ex 2: X/O for clickable squares */
 
 function addClickHandlers(){
     const squares = document.querySelectorAll('.square'); //square class
@@ -27,10 +26,10 @@ function addClickHandlers(){
     squares.forEach(square => {
         square.addEventListener('click', function(){
             if (!square.textContent){ //checks the emptiness of the square
-                square.textContent = curPlayer;
+                square.textContent = curPlayer; 
                 square.classList.add(curPlayer);
-                checkWinner();
-                curPlayer = curPlayer == 'X' ? 'O' : 'X';
+                checkWinner(); //checks to see whether X or the O player is the winner
+                curPlayer = curPlayer == 'X' ? 'O' : 'X'; 
             }
         });
     });
@@ -38,14 +37,20 @@ function addClickHandlers(){
 
 const square = document.querySelectorAll('#board > div');
 
-squares.forEach(square => {
-    square.addEventListener('mouseover', function(){
-        square.classList.add('hover');
+/*Ex 3: Changes the style when the mouse is moved over a square */
+
+function addHoverEffect(){
+    const squares = document.querySelectorAll('#board > div');
+    //adds 2 event listensers for mouseover and mouseout for visual effects
+    squares.forEach(square => {
+        square.addEventListener('mouseover', () => {
+            square.classList.add('hover');
+        });
+        square.addEventListener('mouseout', () => {
+            square.classList.remove('hover');
+        });
     });
-    square.addEventListener('mouseout', function(){
-        square.classList.remove('hover');
-    });
-});
+}
 
 /*Ex 4: Checks for Winners and Does a Status Update*/
 
