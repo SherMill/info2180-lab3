@@ -25,7 +25,7 @@ function addClickHandlers(){
     let curPlayer = 'X'; //starts with player X
     squares.forEach(square => {
         square.addEventListener('click', function(){
-            if (!square.textContent){ //checks the emptiness of the square
+            if (!square.textContent){ //checks the emptiness of the square to disallow cheating for Ex. 6
                 square.textContent = curPlayer; 
                 square.classList.add(curPlayer);
                 checkWinner(); //checks to see whether X or the O player is the winner
@@ -56,17 +56,32 @@ function addHoverEffect(){
 
 function checkWinner(){
     const squares = document.querySelectorAll('#board > div');
-    const winCombinations = [
+    const pWinCombinations = [ //shows all possible winning combos
         [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
         [0, 3, 6], [3, 4, 5], [6, 7, 8],  //columns
         [0, 4, 8], [2, 4, 6]    //diagonals
     ];
-    winCombinations.forEach((pWin) => {
-        const [a, b, c] = combo
-        if (gState[pWin[0]] && gState[pWin[0]] === gState[pWin[1]] && gState[pWin[1]] === gState[pWin[2]]){
-            document.getElementById('status').textContent = `Congratulations! ${gState[pWin[0]]} is the Winner!`;
-            document.getElementById('status').classList.add('you-won');
-            gActive = false;
+    pWinCombinations.forEach((pWin) => {
+        const [a, b, c] = pWin;
+        if (squares[a].textContent && squares[a].textContent === squares[b].textContent && squares[a].textContent === squares[c].textContent) {
+            document.getElementById('status').textContent = `Congratulations! ${squares[a].textContent} is the Winner!`;
+            document.getElementById('status').classList.add('you-won'); //the styling class
         }
     });
 }
+
+/*Ex 5: Restart the Game*/
+function newGame(){
+    console.log('Resetting game...'); //sends message to console
+    const squares = document.querySelectorAll('#board div');
+    squares.forEach(square => {
+        square.textContent = '';
+        square.classList.remove('X', 'O');
+    });
+    const status = document.getElementById('status');
+    status.textContent = 'Move your mouse over a square and click to play an X or an O.';
+    status.classList.remove('you-won'); //removes the you-won before initalising
+    initializeGame(); //Initialise again
+}
+
+document.querySelector('.btn').addEventListener('click', newGame);
